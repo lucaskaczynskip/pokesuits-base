@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class PokemonBaseDto {
+public class PokemonBaseDTO {
 	private Integer id;
     private String racaPokemon;
     private Double pesoMinimo;
