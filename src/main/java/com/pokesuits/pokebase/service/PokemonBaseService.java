@@ -45,12 +45,12 @@ public class PokemonBaseService {
 	}
 
 
-	public List<PokemonPorTiposEntity> quantidadePokemonsPorTipo() {
+	public String quantidadePokemonsPorTipo() {
 		List<PokemonPorTiposEntity> tipos = this.baseRepository.groupByTipoAndCount();
 
-//		StringBuilder string = new StringBuilder();
-//		tipos.forEach(tipo -> string.append("O tipo " + tipo.getId() + " tem uma quantidade de " + tipo.getQuantidade() + " pokemons.\n"));
+		StringBuilder string = new StringBuilder();
+		tipos.forEach(tipo -> string.append("O tipo " + tipo.getId() + " tem uma quantidade de " + tipo.getQuantidade() + " pokemons.\n"));
 
-		return tipos;
+		return string.toString();
 	}
 }

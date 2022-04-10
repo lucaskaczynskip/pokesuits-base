@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pokesuits.pokebase.dto.PokemonBaseDTO;
-import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
 import com.pokesuits.pokebase.enums.TipoPokemon;
 import com.pokesuits.pokebase.service.PokemonBaseService;
 
@@ -31,7 +30,7 @@ public class PokemonBaseController {
 	}
 
 	@GetMapping("/quantidade-pokemons-por-tipo")
-	public List<PokemonPorTiposEntity> quantidadeDePokemonsPorTipo() {
+	public String quantidadeDePokemonsPorTipo() {
 		return baseService.quantidadePokemonsPorTipo();
 	}
 }

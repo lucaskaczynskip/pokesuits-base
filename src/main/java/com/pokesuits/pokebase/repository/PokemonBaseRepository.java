@@ -12,8 +12,8 @@ import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
 @Repository
 public interface PokemonBaseRepository extends MongoRepository<PokemonBaseEntity, Integer>  {
     @Aggregation(pipeline = {
-            "{'$match':{ 'tipo': { '$in': ['BUG', 'DARK', 'DRAGON', 'ELECTRIC', 'FAIRY', 'FIGHTING', 'FIRE', 'FLYING', 'GHOST', 'GRASS', 'GROUND', 'ICE', 'NORMAL', 'POISON', 'PSYCHIC', 'ROCK', 'STEEL', 'WATER'] } }}",
-            "{'$group':{ '_id': '$tipo', 'quantidade': {'$sum': 1} }}"
+            "{'$match':{ 'tipos': { '$in': ['BUG', 'DARK', 'DRAGON', 'ELECTRIC', 'FAIRY', 'FIGHTING', 'FIRE', 'FLYING', 'GHOST', 'GRASS', 'GROUND', 'ICE', 'NORMAL', 'POISON', 'PSYCHIC', 'ROCK', 'STEEL', 'WATER'] } }}",
+            "{'$group':{ '_id': '$tipos', 'quantidade': {'$sum': 1} }}"
     })
     List<PokemonPorTiposEntity> groupByTipoAndCount();
 
