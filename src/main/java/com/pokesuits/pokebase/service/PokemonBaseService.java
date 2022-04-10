@@ -3,6 +3,10 @@ package com.pokesuits.pokebase.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pokesuits.pokebase.dto.PokemonBaseDTO;
@@ -22,8 +26,25 @@ public class PokemonBaseService {
 		return baseRepository.findById(idPokemon).orElseThrow(()->new RegraDeNegocioException("não existe um pokemon base com o id passado"));
 	}
 	
+	public Page<PokemonBaseDTO> todosPokemonbase(Integer pagina){
+		Pageable pageable = PageRequest.of(pagina == null ? 0 : pagina, 10);
+		List<PokemonBaseDTO> collect = todosPokemonbase(pageable);
+		 return new PageImpl<PokemonBaseDTO>(collect);
+	}
+	
 	public List<PokemonBaseDTO> todosPokemonbase(){
-		return baseRepository.findAll().stream()
+		 return baseRepository.findAll().stream()
+				.map(p-> {
+					PokemonBaseDTO baseDTO = new PokemonBaseDTO(p.getId(), p.getRacaPokemon(), p.getPesoMinimo(), 
+							p.getPesoMaximo(), p.getPorcentagemMacho(), p.getLevelMinimo(), p.getDificuldade(), 
+							p.getTipos().get(0), (p.getTipos().size()>1)?p.getTipos().get(1):null, p.getRaridade());
+					return baseDTO;
+				})
+				.collect(Collectors.toList());
+	}
+	
+	private List<PokemonBaseDTO> todosPokemonbase(Pageable pageable){
+		 return baseRepository.findAll(pageable).stream()
 				.map(p-> {
 					PokemonBaseDTO baseDTO = new PokemonBaseDTO(p.getId(), p.getRacaPokemon(), p.getPesoMinimo(), 
 							p.getPesoMaximo(), p.getPorcentagemMacho(), p.getLevelMinimo(), p.getDificuldade(), 
