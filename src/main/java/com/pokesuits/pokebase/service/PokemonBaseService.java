@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
+import com.pokesuits.pokebase.enums.TipoPokemon;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.GroupOperation;
@@ -38,27 +39,21 @@ public class PokemonBaseService {
 				.collect(Collectors.toList());
 	}
 
+	public List<PokemonBaseDTO> getByTipo(String tipo) {
+		return baseRepository.findByTipo1OrTipo2(tipo).stream()
+				.map(pokemon -> {
+					PokemonBaseDTO pokemonBaseDTO = objectMapper.convertValue(pokemon, PokemonBaseDTO.class);
+					pokemonBaseDTO.setId(pokemon.getId());
+					return pokemonBaseDTO;
+				})
+				.collect(Collectors.toList());
+	}
+
 	public String quantidadePokemonsPorTipo() {
-		List<PokemonPorTiposEntity> tipo1 = this.baseRepository.groupByTipo1AndCount();
-		List<PokemonPorTiposEntity> tipo2 = this.baseRepository.groupByTipo2AndCount();
-
-		List<String> tiposListaNomes = new ArrayList<>();
-
-		tipo1.stream().map(tipo -> tiposListaNomes.addAll(Collections.singleton(tipo.getId())));
-		tipo2.stream().forEach(tipo -> {
-			tiposListaNomes.forEach(nome -> {
-				if (nome.equals(tipo.getId())) tipo2.remove(tipo);
-			});
-		});
+		List<PokemonPorTiposEntity> tipos = this.baseRepository.groupByTipoAndCount();
 
 		StringBuilder string = new StringBuilder();
-
-		tipo1.forEach(tipo -> {
-					string.append("O tipo " + tipo.getId() + " tem uma quantidade de " + tipo.getQuantidade() + " pokemons.\n");
-				});
-		tipo2.forEach(tipo -> {
-			string.append("O tipo " + tipo.getId() + " tem uma quantidade de " + tipo.getQuantidade() + " pokemons.\n");
-		});
+		tipos.forEach(tipo -> string.append("O tipo " + tipo.getId() + " tem uma quantidade de " + tipo.getQuantidade() + " pokemons.\n"));
 
 		return string.toString();
 	}
