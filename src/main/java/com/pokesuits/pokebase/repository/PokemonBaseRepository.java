@@ -1,14 +1,13 @@
 package com.pokesuits.pokebase.repository;
 
-import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
-import com.pokesuits.pokebase.enums.TipoPokemon;
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import com.pokesuits.pokebase.entity.PokemonBaseEntity;
-
-import java.util.List;
+import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
 
 @Repository
 public interface PokemonBaseRepository extends MongoRepository<PokemonBaseEntity, Integer>  {
@@ -24,5 +23,5 @@ public interface PokemonBaseRepository extends MongoRepository<PokemonBaseEntity
 //    })
 //    List<PokemonPorTiposEntity> groupByTipo2AndCount();
 
-    List<PokemonBaseEntity> findByTipo1OrTipo2(String tipo);
+    List<PokemonBaseEntity> findByTipos(String tipos);
 }

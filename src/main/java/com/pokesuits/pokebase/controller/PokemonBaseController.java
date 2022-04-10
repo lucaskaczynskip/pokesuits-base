@@ -2,13 +2,14 @@ package com.pokesuits.pokebase.controller;
 
 import java.util.List;
 
-import com.pokesuits.pokebase.enums.TipoPokemon;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pokesuits.pokebase.dto.PokemonBaseDTO;
+import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
+import com.pokesuits.pokebase.enums.TipoPokemon;
 import com.pokesuits.pokebase.service.PokemonBaseService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,12 +26,12 @@ public class PokemonBaseController {
 	}
 
 	@GetMapping("/pokemon-por-tipo")
-	public List<PokemonBaseDTO> getPokemonsPorTipo(@RequestParam String tipo) {
-		return baseService.getByTipo(tipo);
+	public List<PokemonBaseDTO> getPokemonsPorTipo(@RequestParam TipoPokemon tipo) {
+		return baseService.getByTipo(tipo.toString());
 	}
 
 	@GetMapping("/quantidade-pokemons-por-tipo")
-	public String quantidadeDePokemonsPorTipo() {
+	public List<PokemonPorTiposEntity> quantidadeDePokemonsPorTipo() {
 		return baseService.quantidadePokemonsPorTipo();
 	}
 }

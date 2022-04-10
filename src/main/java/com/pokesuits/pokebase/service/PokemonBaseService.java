@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokesuits.pokebase.dto.PokemonBaseDTO;
 import com.pokesuits.pokebase.entity.PokemonBaseEntity;
 import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
@@ -18,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PokemonBaseService {
 	private final PokemonBaseRepository baseRepository;
-	private final ObjectMapper objectMapper;
 	
 	public PokemonBaseEntity getById(Integer idPokemon) throws RegraDeNegocioException {
 		return baseRepository.findById(idPokemon).orElseThrow(()->new RegraDeNegocioException("não existe um pokemon base com o id passado"));
@@ -26,27 +24,33 @@ public class PokemonBaseService {
 	
 	public List<PokemonBaseDTO> todosPokemonbase(){
 		return baseRepository.findAll().stream()
-				.map(p-> objectMapper.convertValue(p, PokemonBaseDTO.class))
+				.map(p-> {
+					PokemonBaseDTO baseDTO = new PokemonBaseDTO(p.getId(), p.getRacaPokemon(), p.getPesoMinimo(), 
+							p.getPesoMaximo(), p.getPorcentagemMacho(), p.getLevelMinimo(), p.getDificuldade(), 
+							p.getTipos().get(0), (p.getTipos().size()>1)?p.getTipos().get(1):null, p.getRaridade());
+					return baseDTO;
+				})
 				.collect(Collectors.toList());
 	}
 
 	public List<PokemonBaseDTO> getByTipo(String tipo) {
-		return baseRepository.findByTipo1OrTipo2(tipo).stream()
-				.map(pokemon -> {
-					PokemonBaseDTO pokemonBaseDTO = objectMapper.convertValue(pokemon, PokemonBaseDTO.class);
-					pokemonBaseDTO.setId(pokemon.getId());
-					return pokemonBaseDTO;
+		return baseRepository.findByTipos(tipo).stream()
+				.map(p -> {
+					PokemonBaseDTO baseDTO = new PokemonBaseDTO(p.getId(), p.getRacaPokemon(), p.getPesoMinimo(), 
+							p.getPesoMaximo(), p.getPorcentagemMacho(), p.getLevelMinimo(), p.getDificuldade(), 
+							p.getTipos().get(0), (p.getTipos().size()>1)?p.getTipos().get(1):null, p.getRaridade());
+					return baseDTO;
 				})
 				.collect(Collectors.toList());
 	}
 
 
-	public String quantidadePokemonsPorTipo() {
+	public List<PokemonPorTiposEntity> quantidadePokemonsPorTipo() {
 		List<PokemonPorTiposEntity> tipos = this.baseRepository.groupByTipoAndCount();
 
-		StringBuilder string = new StringBuilder();
-		tipos.forEach(tipo -> string.append("O tipo " + tipo.getId() + " tem uma quantidade de " + tipo.getQuantidade() + " pokemons.\n"));
+//		StringBuilder string = new StringBuilder();
+//		tipos.forEach(tipo -> string.append("O tipo " + tipo.getId() + " tem uma quantidade de " + tipo.getQuantidade() + " pokemons.\n"));
 
-		return string.toString();
+		return tipos;
 	}
 }
