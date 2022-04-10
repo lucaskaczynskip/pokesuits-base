@@ -21,5 +21,9 @@ public class PokemonBaseController {
 	public List<PokemonBaseDTO> todosPokemonbase(){
 		return baseService.todosPokemonbase();
 	}
-	
+
+	@GetMapping("/quantidade-pokemons-por-tipo")
+	public String quantidadeDePokemonsPorTipo() {
+		return baseService.quantidadePokemonsPorTipo();
+	}
 }
