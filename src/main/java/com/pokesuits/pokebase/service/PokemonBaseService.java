@@ -5,22 +5,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
-import org.bson.Document;
-import org.springframework.data.mongodb.core.aggregation.Aggregation;
-import org.springframework.data.mongodb.core.aggregation.GroupOperation;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pokesuits.pokebase.dto.PokemonBaseDTO;
 import com.pokesuits.pokebase.entity.PokemonBaseEntity;
+import com.pokesuits.pokebase.entity.PokemonPorTiposEntity;
 import com.pokesuits.pokebase.exception.RegraDeNegocioException;
 import com.pokesuits.pokebase.repository.PokemonBaseRepository;
 
 import lombok.RequiredArgsConstructor;
-
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.group;
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +35,7 @@ public class PokemonBaseService {
 	public String quantidadePokemonsPorTipo() {
 		List<PokemonPorTiposEntity> tipo1 = this.baseRepository.groupByTipo1AndCount();
 		List<PokemonPorTiposEntity> tipo2 = this.baseRepository.groupByTipo2AndCount();
-
+		
 		List<String> tiposListaNomes = new ArrayList<>();
 
 		tipo1.stream().map(tipo -> tiposListaNomes.addAll(Collections.singleton(tipo.getId())));

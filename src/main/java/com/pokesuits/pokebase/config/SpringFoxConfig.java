@@ -38,12 +38,12 @@ public class SpringFoxConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("PokeSuits REST API")
-                .description("Uma API qualquer")
-                .version("1.0.0")
+                .title("Pokebase REST API")
+                .description("Tem a base para gerar pokemons aleatórios")
+                .version("47.30.2")
                 .license("Apache License Version 2.0")
                 .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0")
-                .contact(new Contact("Maicon", "https://www.dbccompany.com.br/", "maicon.gerardi@dbccompany.com.br"))
+                .contact(new Contact("Contato empresarial", "https://www.dbccompany.com.br/", "maicon.gerardi@dbccompany.com.br"))
                 .build();
     }
     

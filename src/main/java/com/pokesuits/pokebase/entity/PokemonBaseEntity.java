@@ -1,5 +1,7 @@
 package com.pokesuits.pokebase.entity;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -27,7 +29,6 @@ public class PokemonBaseEntity {
     private Double porcentagemMacho;
     private Integer levelMinimo;
     private Dificuldades dificuldade;
-    private TipoPokemon tipo1;
-    private TipoPokemon tipo2;
+    private List<TipoPokemon> tipos;
     private Raridades raridade;
 }
