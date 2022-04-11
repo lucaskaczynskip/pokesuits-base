@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class pokeAgregateDTO {
+public class PokeAgregateDTO {
     private String nome;
     private Integer quantidade;
 }

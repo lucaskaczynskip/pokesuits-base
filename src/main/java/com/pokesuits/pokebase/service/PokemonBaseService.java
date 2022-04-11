@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.pokesuits.pokebase.dto.PokeAgregateDTO;
 import com.pokesuits.pokebase.dto.PokemonBaseDTO;
-import com.pokesuits.pokebase.dto.pokeAgregateDTO;
 import com.pokesuits.pokebase.entity.PokemonBaseEntity;
 import com.pokesuits.pokebase.exception.RegraDeNegocioException;
 import com.pokesuits.pokebase.repository.PokemonBaseRepository;
@@ -66,9 +66,9 @@ public class PokemonBaseService {
 	}
 
 
-	public List<pokeAgregateDTO> quantidadePokemonsPorTipo() {
+	public List<PokeAgregateDTO> quantidadePokemonsPorTipo() {
 		return this.baseRepository.groupByTipoAndCount().stream().map(p->{
-			pokeAgregateDTO agregateDTO = new pokeAgregateDTO(p.getId(), p.getQuantidade());
+			PokeAgregateDTO agregateDTO = new PokeAgregateDTO(p.getId(), p.getQuantidade());
 			return agregateDTO;
 		}).collect(Collectors.toList());
 	}
