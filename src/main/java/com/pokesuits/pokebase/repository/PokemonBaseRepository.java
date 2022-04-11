@@ -17,11 +17,6 @@ public interface PokemonBaseRepository extends MongoRepository<PokemonBaseEntity
     })
     List<PokemonPorTiposEntity> groupByTipoAndCount();
 
-//    @Aggregation(pipeline = {
-//            "{'$match':{ 'tipo2': { '$in': ['BUG', 'DARK', 'DRAGON', 'ELECTRIC', 'FAIRY', 'FIGHTING', 'FIRE', 'FLYING', 'GHOST', 'GRASS', 'GROUND', 'ICE', 'NORMAL', 'POISON', 'PSYCHIC', 'ROCK', 'STEEL', 'WATER'] } }}",
-//            "{'$group':{ '_id': '$tipo2', 'quantidade': {'$sum': 1} }}"
-//    })
-//    List<PokemonPorTiposEntity> groupByTipo2AndCount();
-
     List<PokemonBaseEntity> findByTipos(String tipos);
 }
+

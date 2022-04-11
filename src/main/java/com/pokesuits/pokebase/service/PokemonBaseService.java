@@ -73,3 +73,4 @@ public class PokemonBaseService {
 		}).collect(Collectors.toList());
 	}
 }
+
